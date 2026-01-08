@@ -1,0 +1,147 @@
+================================================================================
+Simple filter query
+================================================================================
+
+*[_type == "movie"]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (subscript_expression
+    base: (everything)
+    index: (comparison_expression
+      left: (identifier)
+      right: (string
+        (double_quoted_string)))))
+
+================================================================================
+Filter with projection
+================================================================================
+
+*[_type == "movie"]{title}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (projection_expression
+    base: (subscript_expression
+      base: (everything)
+      index: (comparison_expression
+        left: (identifier)
+        right: (string
+          (double_quoted_string))))
+    projection: (projection
+      (identifier))))
+
+================================================================================
+Filter with compound condition
+================================================================================
+
+*[_type == "movie" && releaseYear > 2000]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (subscript_expression
+    base: (everything)
+    index: (and_expression
+      left: (comparison_expression
+        left: (identifier)
+        right: (string
+          (double_quoted_string)))
+      right: (comparison_expression
+        left: (identifier)
+        right: (number)))))
+
+================================================================================
+Pipeline with order and slice
+================================================================================
+
+*[_type == "movie"] | order(releaseYear desc) [0...10]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pipe_expression
+    left: (subscript_expression
+      base: (everything)
+      index: (comparison_expression
+        left: (identifier)
+        right: (string
+          (double_quoted_string))))
+    right: (subscript_expression
+      base: (function_call
+        name: (identifier)
+        (desc_expression
+          expression: (identifier)))
+      start: (number)
+      end: (number))))
+
+================================================================================
+Comment
+================================================================================
+
+// This is a comment
+*
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (everything))
+
+================================================================================
+Complex query with all features
+================================================================================
+
+*[_type == "movie" && releaseYear in [2020, 2021]]{
+  title,
+  "year": releaseYear,
+  director->{name},
+  cast[]->{name, "role": @.role},
+  ...
+}[0..5]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (subscript_expression
+    base: (projection_expression
+      base: (subscript_expression
+        base: (everything)
+        index: (and_expression
+          left: (comparison_expression
+            left: (identifier)
+            right: (string
+              (double_quoted_string)))
+          right: (in_expression
+            left: (identifier)
+            right: (array
+              (number)
+              (number)))))
+      projection: (projection
+        (identifier)
+        (projection_pair
+          key: (string
+            (double_quoted_string))
+          value: (identifier))
+        (projection_expression
+          base: (dereference_expression
+            base: (identifier))
+          projection: (projection
+            (identifier)))
+        (projection_expression
+          base: (dereference_expression
+            base: (subscript_expression
+              base: (identifier)))
+          projection: (projection
+            (identifier)
+            (projection_pair
+              key: (string
+                (double_quoted_string))
+              value: (access_expression
+                base: (this)
+                member: (identifier)))))
+        (spread)))
+    start: (number)
+    end: (number)))

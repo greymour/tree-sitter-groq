@@ -1,0 +1,160 @@
+================================================================================
+Empty projection
+================================================================================
+
+*{}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (projection_expression
+    base: (everything)
+    projection: (projection)))
+
+================================================================================
+Simple projection
+================================================================================
+
+*{title, name}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (projection_expression
+    base: (everything)
+    projection: (projection
+      (identifier)
+      (identifier))))
+
+================================================================================
+Projection with pair
+================================================================================
+
+*{"fullName": name}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (projection_expression
+    base: (everything)
+    projection: (projection
+      (projection_pair
+        key: (string
+          (double_quoted_string))
+        value: (identifier)))))
+
+================================================================================
+Projection with expression
+================================================================================
+
+*{title, director->name}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (projection_expression
+    base: (everything)
+    projection: (projection
+      (identifier)
+      (dereference_expression
+        base: (identifier)
+        member: (identifier)))))
+
+================================================================================
+Projection with spread
+================================================================================
+
+*{...}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (projection_expression
+    base: (everything)
+    projection: (projection
+      (spread))))
+
+================================================================================
+Nested projection
+================================================================================
+
+*{author{name, bio}}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (projection_expression
+    base: (everything)
+    projection: (projection
+      (projection_expression
+        base: (identifier)
+        projection: (projection
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Array dereference with projection
+================================================================================
+
+*{categories[]->{name}}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (projection_expression
+    base: (everything)
+    projection: (projection
+      (projection_expression
+        base: (dereference_expression
+          base: (subscript_expression
+            base: (identifier)))
+        projection: (projection
+          (identifier))))))
+
+================================================================================
+Object literal
+================================================================================
+
+{"key": "value", "num": 42}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (object
+    (object_pair
+      key: (string
+        (double_quoted_string))
+      value: (string
+        (double_quoted_string)))
+    (object_pair
+      key: (string
+        (double_quoted_string))
+      value: (number))))
+
+================================================================================
+Array literal
+================================================================================
+
+[1, 2, 3]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (array
+    (number)
+    (number)
+    (number)))
+
+================================================================================
+Array with spread
+================================================================================
+
+[...items, extra]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (array
+    (spread
+      (identifier))
+    (identifier)))

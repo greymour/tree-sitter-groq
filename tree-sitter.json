@@ -7,11 +7,9 @@
       "title": "Groq",
       "scope": "source.groq",
       "file-types": [
-        "typescript",
-        "javascript",
-        "typescriptreact",
-        "javascriptreact"
+        "groq"
       ],
+      "highlights": "queries/highlights.scm",
       "injection-regex": "^groq$",
       "class-name": "TreeSitterGroq"
     }

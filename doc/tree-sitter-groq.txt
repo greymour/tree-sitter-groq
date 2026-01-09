@@ -1,0 +1,92 @@
+*tree-sitter-groq.txt*  Tree-sitter grammar for GROQ
+
+Author: Kurt Steigleder
+License: MIT
+
+==============================================================================
+CONTENTS                                          *tree-sitter-groq-contents*
+
+    1. Introduction ........................ |tree-sitter-groq-introduction|
+    2. Installation ........................ |tree-sitter-groq-installation|
+    3. Configuration ....................... |tree-sitter-groq-configuration|
+    4. Usage ............................... |tree-sitter-groq-usage|
+    5. Health Check ........................ |tree-sitter-groq-health|
+
+==============================================================================
+1. INTRODUCTION                               *tree-sitter-groq-introduction*
+
+tree-sitter-groq provides a Tree-sitter grammar for GROQ (Graph-Relational
+Object Queries), the query language used by Sanity.io.
+
+Features:
+- Syntax highlighting for `.groq` files
+- Injection into JavaScript/TypeScript template literals
+- Support for `/* groq */`, `defineQuery()`, and `groq` tagged templates
+
+==============================================================================
+2. INSTALLATION                               *tree-sitter-groq-installation*
+
+Requires nvim-treesitter. Install using your preferred plugin manager:
+
+lazy.nvim: >lua
+    {
+      "sanity-io/tree-sitter-groq",
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
+      config = function()
+        require("tree-sitter-groq").setup()
+      end,
+    }
+<
+
+After installation, run `:TSInstall groq` to install the parser.
+
+==============================================================================
+3. CONFIGURATION                             *tree-sitter-groq-configuration*
+
+                                                  *tree-sitter-groq.setup()*
+setup({opts})
+    Configure the plugin. Call this in your init.lua.
+
+    Parameters: ~
+        {opts}  (table|nil) Configuration options:
+                - ensure_installed (boolean): Auto-install parser. Default: true
+
+    Example: >lua
+        require("tree-sitter-groq").setup({
+          ensure_installed = true,
+        })
+<
+
+==============================================================================
+4. USAGE                                             *tree-sitter-groq-usage*
+
+Standalone files:~
+    Files with `.groq` extension are automatically highlighted.
+
+JavaScript/TypeScript injection:~
+    GROQ is injected into template literals using these patterns:
+
+    1. Block comment marker: >typescript
+        const query = /* groq */ `*[_type == "movie"]`;
+<
+    2. defineQuery function: >typescript
+        const query = defineQuery(`*[_type == "movie"]`);
+<
+    3. Tagged template: >typescript
+        const query = groq`*[_type == "movie"]`;
+<
+
+==============================================================================
+5. HEALTH CHECK                                   *tree-sitter-groq-health*
+
+Run `:checkhealth tree-sitter-groq` to verify your installation.
+
+The health check verifies:
+- nvim-treesitter is installed
+- GROQ parser is installed
+- Highlight queries are found
+- Injection queries are found
+- Parser works correctly
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

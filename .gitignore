@@ -45,3 +45,6 @@ zig-out/
 *.tar.gz
 *.tgz
 *.zip
+
+# Random shit for local dev
+docs/

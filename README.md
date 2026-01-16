@@ -11,6 +11,9 @@ Tree-sitter grammar and Neovim plugin for [GROQ](https://www.sanity.io/docs/groq
   - `defineQuery()` function calls: `` defineQuery(`*[_type == "movie"]`) ``
   - `groq` tagged templates: `` groq`*[_type == "movie"]` ``
 
+### Why is this not formally published as a Tree-sitter grammar?
+Because I'm lazy! One day I'll follow the [docs](https://tree-sitter.github.io/tree-sitter/creating-parsers/6-publishing.html) and do it.
+
 ## Installation
 
 ### lazy.nvim
@@ -42,9 +45,6 @@ use {
 ```vim
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'sanity-io/tree-sitter-groq'
-
-" In your init.vim, after plug#end():
-lua require("tree-sitter-groq").setup()
 ```
 
 ## Setup

@@ -4,20 +4,18 @@
     {
       "name": "groq",
       "camelcase": "Groq",
-      "title": "Groq",
+      "title": "GROQ",
       "scope": "source.groq",
-      "file-types": [
-        "groq"
-      ],
+      "file-types": ["groq"],
       "highlights": "queries/highlights.scm",
       "injection-regex": "^groq$",
       "class-name": "TreeSitterGroq"
     }
   ],
   "metadata": {
-    "version": "0.1.0",
+    "version": "1.0.0",
     "license": "MIT",
-    "description": "Parser for the Groq query language used by the Sanity.io headless CMS",
+    "description": "Parser for the GROQ query language used by the Sanity.io headless CMS",
     "authors": [
       {
         "name": "Kurt Steigleder",
@@ -25,7 +23,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/tree-sitter/tree-sitter-groq"
+      "repository": "https://github.com/greymour/tree-sitter-groq"
     }
   },
   "bindings": {
@@ -38,3 +36,4 @@
     "zig": false
   }
 }
+

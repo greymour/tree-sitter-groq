@@ -11,6 +11,11 @@ Tree-sitter grammar and Neovim plugin for [GROQ](https://www.sanity.io/docs/groq
   - `defineQuery()` function calls: `` defineQuery(`*[_type == "movie"]`) ``
   - `groq` tagged templates: `` groq`*[_type == "movie"]` ``
 
+- Syntax highlighting for fenced code blocks in Markdown files:
+```groq
+*[_type == "movie"]
+```
+
 ### Why is this not formally published as a Tree-sitter grammar?
 Because I'm lazy! One day I'll follow the [docs](https://tree-sitter.github.io/tree-sitter/creating-parsers/6-publishing.html) and do it.
 

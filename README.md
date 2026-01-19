@@ -16,6 +16,10 @@ Tree-sitter grammar and Neovim plugin for [GROQ](https://www.sanity.io/docs/groq
 *[_type == "movie"]
 ```
 
+### Example of this working in Neovim
+This example is using the [catpuccin](https://github.com/catppuccin/nvim) `mocha` Neovim theme
+<img width="661" height="382" alt="tree-sitter-groq-examples" src="https://github.com/user-attachments/assets/b21df2dc-4502-4fbe-b00d-313e842f8fb6" />
+
 ### Why is this not formally published as a Tree-sitter grammar?
 Because I'm lazy! One day I'll follow the [docs](https://tree-sitter.github.io/tree-sitter/creating-parsers/6-publishing.html) and do it.
 

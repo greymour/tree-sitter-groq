@@ -48,3 +48,5 @@ zig-out/
 
 # Random shit for local dev
 docs/
+.claude/
+.DS_Store

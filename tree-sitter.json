@@ -13,7 +13,7 @@
     }
   ],
   "metadata": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "description": "Parser for the GROQ query language used by the Sanity.io headless CMS",
     "authors": [

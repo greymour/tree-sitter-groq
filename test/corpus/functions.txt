@@ -161,3 +161,192 @@ path("content.body")
     name: (identifier)
     (string
       (double_quoted_string))))
+
+================================================================================
+Function definition no params
+================================================================================
+
+fn myFunc() = "hello"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (identifier)
+    body: (string
+      (double_quoted_string))))
+
+================================================================================
+Function definition with params
+================================================================================
+
+fn add($a, $b) = $a + $b
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (identifier)
+    (parameter_list
+      (variable)
+      (variable))
+    body: (binary_expression
+      left: (variable)
+      right: (variable))))
+
+================================================================================
+Function definition with projection body
+================================================================================
+
+fn getFields($content) = $content{ name, title }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (identifier)
+    (parameter_list
+      (variable))
+    body: (projection_expression
+      base: (variable)
+      projection: (projection
+        (identifier)
+        (identifier)))))
+
+================================================================================
+Multiple function definitions
+================================================================================
+
+fn helper($x) = $x * 2
+fn main($y) = helper($y)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (identifier)
+    (parameter_list
+      (variable))
+    body: (binary_expression
+      left: (variable)
+      right: (number)))
+  (function_definition
+    name: (identifier)
+    (parameter_list
+      (variable))
+    body: (function_call
+      name: (identifier)
+      (variable))))
+
+================================================================================
+Namespaced function definition
+================================================================================
+
+fn myNamespace::unfurl($url) = $url + "/api";
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (namespaced_identifier
+      namespace: (identifier)
+      name: (identifier))
+    (parameter_list
+      (variable))
+    body: (binary_expression
+      left: (variable)
+      right: (string
+        (double_quoted_string)))))
+
+================================================================================
+Namespaced function call
+================================================================================
+
+geo::distance(point1, point2)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    name: (namespaced_identifier
+      namespace: (identifier)
+      name: (identifier))
+    (identifier)
+    (identifier)))
+
+================================================================================
+Namespaced function call pt::text
+================================================================================
+
+pt::text(body)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    name: (namespaced_identifier
+      namespace: (identifier)
+      name: (identifier))
+    (identifier)))
+
+================================================================================
+Function definition with query body
+================================================================================
+
+fn myApp::getPosts($type) = *[_type == $type];
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (namespaced_identifier
+      namespace: (identifier)
+      name: (identifier))
+    (parameter_list
+      (variable))
+    body: (subscript_expression
+      base: (everything)
+      index: (comparison_expression
+        left: (identifier)
+        right: (variable)))))
+
+================================================================================
+Multiple namespaced function definitions with expression
+================================================================================
+
+fn utils::double($x) = $x * 2;
+fn utils::add($a, $b) = $a + $b;
+utils::add(1, utils::double(2))
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    name: (namespaced_identifier
+      namespace: (identifier)
+      name: (identifier))
+    (parameter_list
+      (variable))
+    body: (binary_expression
+      left: (variable)
+      right: (number)))
+  (function_definition
+    name: (namespaced_identifier
+      namespace: (identifier)
+      name: (identifier))
+    (parameter_list
+      (variable)
+      (variable))
+    body: (binary_expression
+      left: (variable)
+      right: (variable)))
+  (function_call
+    name: (namespaced_identifier
+      namespace: (identifier)
+      name: (identifier))
+    (number)
+    (function_call
+      name: (namespaced_identifier
+        namespace: (identifier)
+        name: (identifier))
+      (number))))

@@ -33,7 +33,9 @@ module.exports = grammar({
 
   word: $ => $.identifier,
 
-  conflicts: $ => [],
+  conflicts: $ => [
+    [$._expression, $.function_call],
+  ],
 
   supertypes: $ => [
     $._expression,
@@ -41,7 +43,28 @@ module.exports = grammar({
   ],
 
   rules: {
-    source_file: $ => optional($._expression),
+    source_file: $ => seq(
+      repeat($.function_definition),
+      optional($._expression),
+    ),
+
+    // Function definition: fn name($param) = expression; or fn namespace::name($param) = expression;
+    function_definition: $ => seq(
+      "fn",
+      field("name", choice($.identifier, $.namespaced_identifier)),
+      "(",
+      optional($.parameter_list),
+      ")",
+      "=",
+      field("body", $._expression),
+      optional(";"),
+    ),
+
+    parameter_list: $ => seq(
+      $.variable,
+      repeat(seq(",", $.variable)),
+      optional(","),
+    ),
 
     _expression: $ => choice(
       $._literal,
@@ -130,6 +153,13 @@ module.exports = grammar({
 
     // Identifiers and variables
     identifier: _ => /[_A-Za-z][_0-9A-Za-z]*/,
+
+    // Namespaced identifier for custom functions (e.g., myNamespace::myFunction)
+    namespaced_identifier: $ => seq(
+      field("namespace", $.identifier),
+      "::",
+      field("name", $.identifier),
+    ),
 
     variable: _ => /\$[_A-Za-z][_0-9A-Za-z]*/,
 
@@ -331,9 +361,9 @@ module.exports = grammar({
       field("value", $._expression),
     ),
 
-    // Function calls
+    // Function calls (supports both regular and namespaced functions)
     function_call: $ => seq(
-      field("name", $.identifier),
+      field("name", choice($.identifier, $.namespaced_identifier)),
       "(",
       optional(seq(
         $._function_argument,
